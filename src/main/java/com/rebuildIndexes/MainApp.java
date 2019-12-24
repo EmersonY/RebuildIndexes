@@ -576,7 +576,7 @@ public class MainApp extends JFrame {
         public void run() {
             while (end == 0 && percentage <= 100) {
                 if (percentage == 100) {
-                    end = 1; // 已经到达过100，是时候结束线程了
+                    end = 1; // 已经到达过100，是时候结束线程了1
                 }
                 bar.setValue(percentage);
             }
