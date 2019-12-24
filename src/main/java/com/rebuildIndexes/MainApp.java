@@ -103,19 +103,19 @@ public class MainApp extends JFrame {
         portText.setBounds(130, 180, 250, 25);
         systemComboBoxLabel = new JLabel("请选择系统");
         systemComboBoxLabel.setBounds(50, 220, 250, 25);
-        systemComboBox=new JComboBox();
+        systemComboBox = new JComboBox();
         systemComboBox.addItem("云文档");
         systemComboBox.addItem("智能备份");
         systemComboBox.setBounds(130, 220, 250, 25);
         versionComboBoxLabel = new JLabel("请选择版本");
         versionComboBoxLabel.setBounds(50, 260, 250, 25);
-        versionComboBox=new JComboBox();
+        versionComboBox = new JComboBox();
         versionComboBox.addItem("旧版数据库");
         versionComboBox.addItem("新版数据库");
         versionComboBox.setBounds(130, 260, 250, 25);
         analyzeComboBoxLabel = new JLabel("请选择分词:   ");
         analyzeComboBoxLabel.setBounds(50, 300, 250, 25);
-        analyzeComboBox=new JComboBox();
+        analyzeComboBox = new JComboBox();
         analyzeComboBox.addItem("SmartChineseAnalyzer");
         analyzeComboBox.addItem("IKAnalyzer");
         analyzeComboBox.setBounds(130, 300, 250, 25);
@@ -128,7 +128,7 @@ public class MainApp extends JFrame {
         moveBtn.setBounds(393, 340, 60, 25);
         moveBtn.addMouseListener(new MouseAdapter() { // 添加鼠标点击事件
             public void mouseClicked(MouseEvent event) {
-            fileMovePath(new JButton());
+                fileMovePath(new JButton());
             }
         });
 
@@ -176,12 +176,12 @@ public class MainApp extends JFrame {
                         public void run() {
                             String system = systemComboBox.getSelectedItem().toString();
                             String analy = analyzeComboBox.getSelectedItem().toString();
-                            if(analy.equals("SmartChineseAnalyzer")){
+                            if (analy.equals("SmartChineseAnalyzer")) {
                                 config = new IndexWriterConfig(Version.LUCENE_31, new SmartChineseAnalyzer(Version.LUCENE_31));// 智能中文分词器
-                            } else if(analy.equals("IKAnalyzer")){
+                            } else if (analy.equals("IKAnalyzer")) {
                                 config = new IndexWriterConfig(Version.LUCENE_31, new IKAnalyzer()); //IK分词器
                             }
-                            if(system.equals("云文档")){
+                            if (system.equals("云文档")) {
                                 // 创建系统默认云文档文件夹
                                 File lddsmFile = new File(LDDSM_STOREPATH);
                                 if (!lddsmFile.exists()) {
@@ -189,7 +189,7 @@ public class MainApp extends JFrame {
                                 }
                                 rebuildLddsmIndexes();
                             }
-                            if(system.equals("智能备份")){
+                            if (system.equals("智能备份")) {
                                 // 创建系统默认云文档文件夹
                                 File ldfbsFile = new File(LDFBS_STOREPATH);
                                 if (!ldfbsFile.exists()) {
@@ -249,7 +249,7 @@ public class MainApp extends JFrame {
     }
 
     /**
-     *重建云文档索引
+     * 重建云文档索引
      *
      * @param: []
      * @return: void
@@ -286,24 +286,30 @@ public class MainApp extends JFrame {
     }
 
     public void gotoRubuildLddsm() throws Exception {
+        String version = versionComboBox.getSelectedItem().toString();
+        String isFolderTrue = "T";
+        String isFolderFalse = "F";
+        if (version.equals("新版数据库")) {
+            isFolderTrue = "1";
+            isFolderFalse = "0";
+        }
         String documentCountSql = "SELECT\n" +
                 "\tcount(*) as num\n" +
                 "FROM\n" +
                 "\tdsm_node_base t1\n" +
                 "RIGHT JOIN dsm_node_document t2 ON t1.NBS_UUID = t2.NBS_UUID\n" +
                 "RIGHT JOIN dsm_node_document_text t3 ON t2.NBS_UUID = t3.NBS_UUID\n" +
-                "WHERE t1.NDC_ISFOLDER = \"F\"";
+                "WHERE t1.NDC_ISFOLDER = '" + isFolderFalse +"'";
         pst = conn.prepareStatement(documentCountSql);
         ResultSet resultSet = pst.executeQuery();
         resultSet.next();
         double documentNum = resultSet.getInt("num");
-        String version = versionComboBox.getSelectedItem().toString();
         String folderCountSql = "SELECT\n" +
                 "\tCOUNT(*) AS num\n" +
                 "FROM\n" +
                 "\tdsm_node_base t1\n" +
                 "RIGHT JOIN dsm_node_folder t2 ON t1.NBS_UUID = t2.NBS_UUID\n" +
-                "WHERE t1.NDC_ISFOLDER = \"T\"";
+                "WHERE t1.NDC_ISFOLDER = '" + isFolderTrue +"'";
         pst = conn.prepareStatement(folderCountSql);
         resultSet = pst.executeQuery();
         resultSet.next();
@@ -316,7 +322,7 @@ public class MainApp extends JFrame {
                 "\tdsm_node_base t1\n" +
                 "RIGHT JOIN dsm_node_document t2 ON t1.NBS_UUID = t2.NBS_UUID\n" +
                 "RIGHT JOIN dsm_node_document_text t3 ON t2.NBS_UUID = t3.NBS_UUID\n" +
-                "WHERE t1.NDC_ISFOLDER = \"F\"";
+                "WHERE t1.NDC_ISFOLDER = '" + isFolderFalse +"'";
         pst = conn.prepareStatement(documentSql);
         resultSet = pst.executeQuery();
         while (resultSet.next()) {
@@ -330,14 +336,14 @@ public class MainApp extends JFrame {
             String parent = resultSet.getString("NBS_PARENT");
             document.add(new Field("parent", parent, Field.Store.YES, Field.Index.NOT_ANALYZED));
 
-            if(version.equals("旧版数据库")){
+            if (version.equals("旧版数据库")) {
                 // 旧版作者
                 String author = resultSet.getString("NBS_AUTHOR");
                 document.add(new Field("author", String.valueOf(author), Field.Store.YES, Field.Index.NOT_ANALYZED));
-            }else{
+            } else {
                 // 新版作者
                 long USR_ID = resultSet.getLong("NBS_AUTHOR");
-                String findUserByPk = "SELECT * FROM dsm_user where USR_ID = "+ USR_ID;
+                String findUserByPk = "SELECT * FROM dsm_user where USR_ID = " + USR_ID;
                 pst = conn.prepareStatement(findUserByPk);
                 ResultSet rs = pst.executeQuery();
                 rs.next();
@@ -397,9 +403,9 @@ public class MainApp extends JFrame {
             double v = b1.divide(b2, 2, BigDecimal.ROUND_HALF_UP).doubleValue() * 100;
             percentage = (int) v;
 
-            try{
+            try {
                 indexWriter.addDocument(document);
-            }catch(Exception e){
+            } catch (Exception e) {
                 log.error(uuid);
                 document.removeField("text");
                 indexWriter.addDocument(document);
@@ -411,7 +417,7 @@ public class MainApp extends JFrame {
                 "FROM\n" +
                 "\tdsm_node_base t1\n" +
                 "RIGHT JOIN dsm_node_folder t2 ON t1.NBS_UUID = t2.NBS_UUID\n" +
-                "WHERE t1.NDC_ISFOLDER = \"T\"";
+                "WHERE t1.NDC_ISFOLDER = '" + isFolderTrue +"'";
         pst = conn.prepareStatement(folderSql);
         resultSet = pst.executeQuery();
         while (resultSet.next()) {
@@ -419,14 +425,14 @@ public class MainApp extends JFrame {
             uuid = resultSet.getString("NBS_UUID");
             document.add(new Field("uuid", uuid, Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
 
-            if(version.equals("旧版数据库")){
+            if (version.equals("旧版数据库")) {
                 // 旧版作者
                 String author = resultSet.getString("NBS_AUTHOR");
                 document.add(new Field("author", String.valueOf(author), Field.Store.YES, Field.Index.NOT_ANALYZED));
-            }else{
+            } else {
                 // 新版作者
                 long USR_ID = resultSet.getLong("NBS_AUTHOR");
-                String findUserByPk = "SELECT * FROM dsm_user where USR_ID = "+ USR_ID;
+                String findUserByPk = "SELECT * FROM dsm_user where USR_ID = " + USR_ID;
                 pst = conn.prepareStatement(findUserByPk);
                 ResultSet rs = pst.executeQuery();
                 rs.next();
@@ -463,7 +469,7 @@ public class MainApp extends JFrame {
     }
 
     /**
-     *重建云文档索引
+     * 重建云文档索引
      *
      * @param: []
      * @return: void
@@ -518,14 +524,15 @@ public class MainApp extends JFrame {
             document.add(new Field("_hibernate_class", "com.lddsm.dao.bean.LdfbsSearchNode", Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
             // 是否为智能备份
             Boolean isVirtual = resultSet.getBoolean("IS_VIRTUAL");
-            if(isVirtual){
-                document.add(new Field("isVirtual",  String.valueOf("true"), Field.Store.YES, Field.Index.NOT_ANALYZED));
-            }else{
-                document.add(new Field("isVirtual",  String.valueOf("false"), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            if (isVirtual) {
+                document.add(new Field("isVirtual", String.valueOf("true"), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            } else {
+                document.add(new Field("isVirtual", String.valueOf("false"), Field.Store.YES, Field.Index.NOT_ANALYZED));
             }
             // 名称
-            String name = resultSet.getString("NBS_NAME").toLowerCase();;
-            document.add(new Field("name",  name, Field.Store.YES, Field.Index.NOT_ANALYZED));
+            String name = resultSet.getString("NBS_NAME").toLowerCase();
+            ;
+            document.add(new Field("name", name, Field.Store.YES, Field.Index.NOT_ANALYZED));
             // 最后修改时间
             Date lastModifiedStr = resultSet.getDate("NBS_LAST_MODIFIED");
             if (lastModifiedStr != null) {
@@ -533,7 +540,7 @@ public class MainApp extends JFrame {
                 document.add(new Field("lastModified", lastModified, Field.Store.YES, Field.Index.NOT_ANALYZED));
             }
             Long umId = resultSet.getLong("UM_ID");
-            document.add(new Field("umId",  String.valueOf(umId), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            document.add(new Field("umId", String.valueOf(umId), Field.Store.YES, Field.Index.NOT_ANALYZED));
             quantityInExecution++;
             BigDecimal b1 = new BigDecimal(quantityInExecution);
             BigDecimal b2 = new BigDecimal(num);
@@ -545,14 +552,14 @@ public class MainApp extends JFrame {
 
 
     /**
-     *关闭资源
+     * 关闭资源
      *
      * @param: []
      * @return: void
      * @author: caiyf
      * @date: 2019-12-23
      */
-    public void close(){
+    public void close() {
         percentage = 101;
         okBtn.setEnabled(true);
         try {
@@ -573,6 +580,7 @@ public class MainApp extends JFrame {
 
     class ATask extends Thread {
         int end = 0; // 是否已经结束
+
         public void run() {
             while (end == 0 && percentage <= 100) {
                 if (percentage == 100) {
