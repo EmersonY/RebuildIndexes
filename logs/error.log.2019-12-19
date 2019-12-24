@@ -1,0 +1,56 @@
+[ERROR] [10:05:56] com.rebuildIndexes.MainApp - 54315de7-c908-41a1-be2d-ce86f1e75d64
+[ERROR] [10:06:48] com.rebuildIndexes.MainApp - 6b91b39a-4895-48fd-ad37-6461cc36ac73
+[ERROR] [10:07:29] com.rebuildIndexes.MainApp - 82890e8e-563f-48ac-b257-f8b8438f9f5f
+[ERROR] [10:12:17] com.rebuildIndexes.MainApp - fea85d18-a133-409c-a46e-7abcf9722206
+[ERROR] [13:32:07] com.rebuildIndexes.MainApp - 索引库重建失败-Exception!
+java.io.IOException: 文件名、目录名或卷标语法不正确。
+	at java.io.WinNTFileSystem.canonicalize0(Native Method)
+	at java.io.Win32FileSystem.canonicalize(Win32FileSystem.java:414)
+	at java.io.File.getCanonicalPath(File.java:618)
+	at org.apache.lucene.store.FSDirectory.getCanonicalPath(FSDirectory.java:140)
+	at org.apache.lucene.store.FSDirectory.<init>(FSDirectory.java:154)
+	at org.apache.lucene.store.MMapDirectory.<init>(MMapDirectory.java:93)
+	at org.apache.lucene.store.FSDirectory.open(FSDirectory.java:191)
+	at org.apache.lucene.store.FSDirectory.open(FSDirectory.java:183)
+	at com.rebuildIndexes.MainApp.rebuildLddsmIndexes(MainApp.java:235)
+	at com.rebuildIndexes.MainApp$2$2.run(MainApp.java:169)
+	at java.lang.Thread.run(Thread.java:745)
+[ERROR] [13:32:23] com.rebuildIndexes.MainApp - 索引库重建失败-Exception!
+java.io.IOException: 文件名、目录名或卷标语法不正确。
+	at java.io.WinNTFileSystem.canonicalize0(Native Method)
+	at java.io.Win32FileSystem.canonicalize(Win32FileSystem.java:414)
+	at java.io.File.getCanonicalPath(File.java:618)
+	at org.apache.lucene.store.FSDirectory.getCanonicalPath(FSDirectory.java:140)
+	at org.apache.lucene.store.FSDirectory.<init>(FSDirectory.java:154)
+	at org.apache.lucene.store.MMapDirectory.<init>(MMapDirectory.java:93)
+	at org.apache.lucene.store.FSDirectory.open(FSDirectory.java:191)
+	at org.apache.lucene.store.FSDirectory.open(FSDirectory.java:183)
+	at com.rebuildIndexes.MainApp.rebuildLddsmIndexes(MainApp.java:235)
+	at com.rebuildIndexes.MainApp$2$2.run(MainApp.java:169)
+	at java.lang.Thread.run(Thread.java:745)
+[ERROR] [13:33:49] com.rebuildIndexes.MainApp - 索引库重建失败-Exception!
+java.io.IOException: 文件名、目录名或卷标语法不正确。
+	at java.io.WinNTFileSystem.canonicalize0(Native Method)
+	at java.io.Win32FileSystem.canonicalize(Win32FileSystem.java:414)
+	at java.io.File.getCanonicalPath(File.java:618)
+	at org.apache.lucene.store.FSDirectory.getCanonicalPath(FSDirectory.java:140)
+	at org.apache.lucene.store.FSDirectory.<init>(FSDirectory.java:154)
+	at org.apache.lucene.store.MMapDirectory.<init>(MMapDirectory.java:93)
+	at org.apache.lucene.store.FSDirectory.open(FSDirectory.java:191)
+	at org.apache.lucene.store.FSDirectory.open(FSDirectory.java:183)
+	at com.rebuildIndexes.MainApp.rebuildLddsmIndexes(MainApp.java:235)
+	at com.rebuildIndexes.MainApp$2$2.run(MainApp.java:169)
+	at java.lang.Thread.run(Thread.java:745)
+[ERROR] [13:35:26] com.rebuildIndexes.MainApp - 索引库重建失败-Exception!
+java.io.IOException: 文件名、目录名或卷标语法不正确。
+	at java.io.WinNTFileSystem.canonicalize0(Native Method)
+	at java.io.Win32FileSystem.canonicalize(Win32FileSystem.java:414)
+	at java.io.File.getCanonicalPath(File.java:618)
+	at org.apache.lucene.store.FSDirectory.getCanonicalPath(FSDirectory.java:140)
+	at org.apache.lucene.store.FSDirectory.<init>(FSDirectory.java:154)
+	at org.apache.lucene.store.MMapDirectory.<init>(MMapDirectory.java:93)
+	at org.apache.lucene.store.FSDirectory.open(FSDirectory.java:191)
+	at org.apache.lucene.store.FSDirectory.open(FSDirectory.java:183)
+	at com.rebuildIndexes.MainApp.rebuildLddsmIndexes(MainApp.java:235)
+	at com.rebuildIndexes.MainApp$2$2.run(MainApp.java:169)
+	at java.lang.Thread.run(Thread.java:745)

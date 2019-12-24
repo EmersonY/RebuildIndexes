@@ -1,0 +1,74 @@
+[ERROR] [15:23:22] com.rebuildIndexes.MainApp - 54315de7-c908-41a1-be2d-ce86f1e75d64
+[ERROR] [15:24:10] com.rebuildIndexes.MainApp - 6b91b39a-4895-48fd-ad37-6461cc36ac73
+[ERROR] [15:24:48] com.rebuildIndexes.MainApp - 82890e8e-563f-48ac-b257-f8b8438f9f5f
+[ERROR] [15:29:27] com.rebuildIndexes.MainApp - fea85d18-a133-409c-a46e-7abcf9722206
+[ERROR] [15:32:39] com.rebuildIndexes.MainApp - 索引库重建失败-Exception!1
+java.sql.SQLException: Column 'NDC_MIME_TYPE' not found.
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:910)
+	at com.mysql.jdbc.ResultSet.findColumn(ResultSet.java:955)
+	at com.mysql.jdbc.ResultSet.getString(ResultSet.java:5436)
+	at com.rebuildIndexes.MainApp.gotoRubuildLdfbs(MainApp.java:518)
+	at com.rebuildIndexes.MainApp.rebuildLdfbsIndexes(MainApp.java:463)
+	at com.rebuildIndexes.MainApp$2$2.run(MainApp.java:187)
+	at java.lang.Thread.run(Thread.java:745)
+[ERROR] [16:16:26] com.rebuildIndexes.MainApp - 54315de7-c908-41a1-be2d-ce86f1e75d64
+[ERROR] [16:17:29] com.rebuildIndexes.MainApp - 6b91b39a-4895-48fd-ad37-6461cc36ac73
+[ERROR] [16:18:16] com.rebuildIndexes.MainApp - 82890e8e-563f-48ac-b257-f8b8438f9f5f
+[ERROR] [16:23:34] com.rebuildIndexes.MainApp - fea85d18-a133-409c-a46e-7abcf9722206
+[ERROR] [17:15:51] com.rebuildIndexes.MainApp - 索引库重建失败-Exception!
+java.sql.SQLException: Access denied for user 'lddsm'@'localhost' (using password: YES)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:946)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:2870)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:812)
+	at com.mysql.jdbc.MysqlIO.secureAuth411(MysqlIO.java:3269)
+	at com.mysql.jdbc.MysqlIO.doHandshake(MysqlIO.java:1182)
+	at com.mysql.jdbc.Connection.createNewIO(Connection.java:2670)
+	at com.mysql.jdbc.Connection.<init>(Connection.java:1531)
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:266)
+	at java.sql.DriverManager.getConnection(DriverManager.java:571)
+	at java.sql.DriverManager.getConnection(DriverManager.java:215)
+	at com.rebuildIndexes.MainApp.rebuildLddsmIndexes(MainApp.java:259)
+	at com.rebuildIndexes.MainApp$2$2.run(MainApp.java:184)
+	at java.lang.Thread.run(Thread.java:745)
+[ERROR] [17:16:00] com.rebuildIndexes.MainApp - 索引库重建失败-CommunicationsException!
+com.mysql.jdbc.CommunicationsException: Communications link failure due to underlying exception: 
+
+** BEGIN NESTED EXCEPTION ** 
+
+java.net.UnknownHostException
+MESSAGE: localhost1
+
+STACKTRACE:
+
+java.net.UnknownHostException: localhost1
+	at java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.net.InetAddress$1.lookupAllHostAddr(InetAddress.java:901)
+	at java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1293)
+	at java.net.InetAddress.getAllByName0(InetAddress.java:1246)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1162)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1098)
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:137)
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:276)
+	at com.mysql.jdbc.Connection.createNewIO(Connection.java:2666)
+	at com.mysql.jdbc.Connection.<init>(Connection.java:1531)
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:266)
+	at java.sql.DriverManager.getConnection(DriverManager.java:571)
+	at java.sql.DriverManager.getConnection(DriverManager.java:215)
+	at com.rebuildIndexes.MainApp.rebuildLddsmIndexes(MainApp.java:259)
+	at com.rebuildIndexes.MainApp$2$2.run(MainApp.java:184)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+** END NESTED EXCEPTION **
+
+
+
+Last packet sent to the server was 1 ms ago.
+	at com.mysql.jdbc.Connection.createNewIO(Connection.java:2741)
+	at com.mysql.jdbc.Connection.<init>(Connection.java:1531)
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:266)
+	at java.sql.DriverManager.getConnection(DriverManager.java:571)
+	at java.sql.DriverManager.getConnection(DriverManager.java:215)
+	at com.rebuildIndexes.MainApp.rebuildLddsmIndexes(MainApp.java:259)
+	at com.rebuildIndexes.MainApp$2$2.run(MainApp.java:184)
+	at java.lang.Thread.run(Thread.java:745)
